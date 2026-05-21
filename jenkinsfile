@@ -32,12 +32,12 @@ pipeline{
         }
         stage("Build Docker Image"){
             steps{
-                sh 'docker build -t python-security-project .'
+                sh 'docker build -t python-project .'
             }
         }
         stage('Trivy Image Scan'){
             steps{
-                sh 'trivy image python-security-project:latest'
+                sh 'trivy image python-project:latest'
             }
         }
         stage('Run Container'){
@@ -45,7 +45,7 @@ pipeline{
                 sh '''
                 docker stop python-container  true
                 docker rm python-container  true
-                docker run -d --name python-container -p 5000:5000 python-security-project:latest
+                docker run -d --name python-container -p 5000:5000 python-project:latest
                 '''
             }
         }
